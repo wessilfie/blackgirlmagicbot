@@ -38,11 +38,11 @@ def receive_message():
                 #if user just sends us a regular text message
                 if message['message'].get('text'):
                     response_sent_text = get_message()
-                    send_message_user = send_message(response_sent_text)
+                    send_message_user = send_message(recipient_id, response_sent_text)
                 #if user sends us a GIF, photo,video, or any other non-text item
                 if message['message'].get('attachments'):
                     response_sent_nontext = get_message()
-                    send_message_user = send_message(response_sent_nontext)
+                    send_message_user = send_message(recipient_id, esponse_sent_nontext)
             else:
                 pass
     return "success"
@@ -68,7 +68,7 @@ def get_message():
     return response 
 
 #uses PyMessenger to send response to user
-def send_message(response):
+def send_message(recipient_id, response):
     """since some of our response types are not text, we try to send it as an image
     If we send the text to Facebook and the image fails, we simply send the user a text message with
     just the link from our file"""
