@@ -38,10 +38,10 @@ def receive_message():
                 #if user sends us a GIF, photo,video, or any other non-text item
                 if message['message'].get('attachments'):
                     response_sent_nontext = get_message()
-                    send_message(recipient_id, esponse_sent_nontext)
+                    send_message(recipient_id, response_sent_nontext)
             else:
                 pass
-    return "success"
+
 
 
 def verify_fb_token(token_sent):
@@ -71,7 +71,7 @@ def send_message(recipient_id, response):
     try:
         bot.send_image_url(recipient_id, response)
         if "error" in response_nontext:
-            b = bot.send_text_message(recipient_id, response)
+            bot.send_text_message(recipient_id, response)
     except:
         bot.send_text_message(recipient_id, response)
 
