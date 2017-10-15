@@ -41,6 +41,8 @@ def receive_message():
                     send_message(recipient_id, response_sent_nontext)
             else:
                 pass
+    return "Message processed"
+          
 
 
 
