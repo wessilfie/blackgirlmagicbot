@@ -74,6 +74,7 @@ def send_message(recipient_id, response):
             bot.send_text_message(recipient_id, response)
     except:
         bot.send_text_message(recipient_id, response)
+    return "Message sent"
 
 
 @app.route("/privacypolicy", methods=['GET', 'POST'])
