@@ -1,19 +1,15 @@
 #Python libraries that we need to import for our bot
 import requests
-from flask import Flask, request, redirect, render_template, request, session, abort
+from flask import Flask, render_template, request
 from pymessenger.bot import Bot
-from pymessenger import Element, Button
 from random import randint
 import os
-import sys
 import json
 import csv
 
 app = Flask(__name__)
-ACCESS_TOKEN = os.environ['ACCESS_TOKEN']
-VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
-access_token = ACCESS_TOKEN
-verify_token = VERIFY_TOKEN
+access_token = os.environ['ACCESS_TOKEN']
+verify_token = os.environ['VERIFY_TOKEN']
 bot = Bot (access_token)
 
 #We will receive messages that Facebook sends to our bot at this endpoint 
@@ -38,11 +34,11 @@ def receive_message():
                 #if user just sends us a regular text message
                 if message['message'].get('text'):
                     response_sent_text = get_message()
-                    send_message_user = send_message(recipient_id, response_sent_text)
+                    send_message(recipient_id, response_sent_text)
                 #if user sends us a GIF, photo,video, or any other non-text item
                 if message['message'].get('attachments'):
                     response_sent_nontext = get_message()
-                    send_message_user = send_message(recipient_id, esponse_sent_nontext)
+                    send_message(recipient_id, esponse_sent_nontext)
             else:
                 pass
     return "success"
@@ -73,13 +69,12 @@ def send_message(recipient_id, response):
     If we send the text to Facebook and the image fails, we simply send the user a text message with
     just the link from our file"""
     try:
-        response_nontext = bot.send_image_url(recipient_id, response)
+        bot.send_image_url(recipient_id, response)
         if "error" in response_nontext:
             b = bot.send_text_message(recipient_id, response)
     except:
-        response_text = bot.send_text_message(recipient_id, response)
-    #return a message stating that the message was sent
-    return "success"
+        bot.send_text_message(recipient_id, response)
+
 
 @app.route("/privacypolicy", methods=['GET', 'POST'])
 def privacy():
